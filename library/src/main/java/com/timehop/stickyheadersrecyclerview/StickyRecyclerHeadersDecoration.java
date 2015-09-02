@@ -67,6 +67,19 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   }
 
   /**
+   * Determines if an item in the list should have a header that is different than the item in the
+   * list that immediately precedes it. Items with no headers will always return false.
+   *
+   * @param position of the list item in questions
+   * @param recyclerView the recyclerView that is showing the items
+   * @return true if this item has a different header than the previous item in the list
+   * @see {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
+   */
+  public boolean hasNewHeader(int position, RecyclerView recyclerView) {
+    return mHeaderPositionCalculator.hasNewHeader(position, mOrientationProvider.isReverseLayout(recyclerView));
+  }
+
+  /**
    * Sets the offsets for the first item in a section to make room for the header view
    *
    * @param itemOffsets rectangle to define offsets for the item

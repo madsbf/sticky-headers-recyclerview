@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.timehop.stickyheadersrecyclerview.caching.HeaderProvider;
@@ -102,15 +103,17 @@ public class HeaderPositionCalculator {
   }
 
   private Rect getDefaultHeaderOffset(RecyclerView recyclerView, View header, View firstView, int orientation) {
+    int top = recyclerView.getLayoutManager().getDecoratedTop(firstView);
+
     int translationX, translationY;
     Rect headerMargins = mDimensionCalculator.getMargins(header);
     if (orientation == LinearLayoutManager.VERTICAL) {
-      translationX = firstView.getLeft() + headerMargins.left;
+      translationX = headerMargins.left;
       translationY = Math.max(
-          firstView.getTop() - header.getHeight() - headerMargins.bottom,
+          top - headerMargins.bottom,
           getListTop(recyclerView) + headerMargins.top);
     } else {
-      translationY = firstView.getTop() + headerMargins.top;
+      translationY = top + headerMargins.top;
       translationX = Math.max(
           firstView.getLeft() - header.getWidth() - headerMargins.right,
           getListLeft(recyclerView) + headerMargins.left);
